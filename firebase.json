@@ -1,0 +1,39 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "lockapplication-d4243",
+          "appId": "1:90025066640:android:b498c2c335953fb761d815",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "lockapplication-d4243",
+          "configurations": {
+            "android": "1:90025066640:android:b498c2c335953fb761d815",
+            "ios": "1:90025066640:ios:d7de69206a740eff61d815",
+            "macos": "1:90025066640:ios:d7de69206a740eff61d815",
+            "web": "1:90025066640:web:1c61e3be7b6e327461d815",
+            "windows": "1:90025066640:web:328c0ceb833e332d61d815"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

@@ -20,6 +20,7 @@ dependencies:
   dotted_border: ^3.1.0
   flutter_device_apps: ^0.3.1
   package_info_plus: ^9.0.0
+  firebase_core: ^4.2.1
 
 dev_dependencies:
   flutter_test:
