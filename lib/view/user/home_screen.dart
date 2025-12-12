@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class AppInfo {
   final String name;
@@ -58,7 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
       app.status = 'lockNow';
       app.timelock = _selectedTime;
       debugPrint("Lock Now ${app.name} ${app.timelock}");
-      print(app.timelock!.difference(DateTime.now()));
       setState(() {
         _selectedTime = DateTime.now();
       });
@@ -70,11 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (d.inMinutes <= 0) return "0 phút";
 
     if (d.inMinutes >= 60) {
-      int hours = d.inHours; // số giờ
-      int minutes = d.inMinutes % 60; // số phút còn lại
+      int hours = d.inHours;
+      int minutes = d.inMinutes % 60;
       return "$hours giờ $minutes phút";
     }
-
     return "${d.inMinutes} phút";
   }
 
@@ -147,11 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(app.icon),
                         Text(app.name),
-                        if (app.status == 'lockNow')
-                          Text(
-                            'Khóa trong ${formatDuration(app.timelock!.difference(DateTime.now()))} ',
-                            textAlign: .center,
-                          ),
+                        if (app.status == 'lockNow') AppLockWidget(app: app),
                       ],
                     ),
                   ),
@@ -216,6 +211,54 @@ class _HomeScreenState extends State<HomeScreen> {
         SizedBox(height: 8),
         Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
       ],
+    );
+  }
+}
+
+class AppLockWidget extends StatefulWidget {
+  final AppInfo app;
+
+  const AppLockWidget({super.key, required this.app});
+
+  @override
+  State<AppLockWidget> createState() => _AppLockWidgetState();
+}
+
+class _AppLockWidgetState extends State<AppLockWidget> {
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _timer = Timer.periodic(Duration(seconds: 1), (_) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  String formatDuration(Duration d) {
+    if (d.inMinutes <= 0) return "0 phút";
+    if (d.inMinutes >= 60) {
+      int hours = d.inHours;
+      int minutes = d.inMinutes % 60;
+      return "$hours giờ $minutes phút";
+    }
+    return "${d.inMinutes} phút";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final remaining = widget.app.timelock!.difference(DateTime.now());
+
+    return Text(
+      'Khóa trong ${formatDuration(remaining)}',
+      textAlign: TextAlign.center,
     );
   }
 }
