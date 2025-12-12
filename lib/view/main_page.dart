@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lock_application/view/user/home_screen.dart';
+import 'package:lock_application/view/user/home/home_screen.dart';
 import 'package:lock_application/view/user/profile_screen.dart';
 import 'package:lock_application/view/user/setting_screen.dart';
 
