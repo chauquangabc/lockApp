@@ -36,14 +36,49 @@ class Member {
   Member({required this.name, required this.device});
 }
 
-// Lớp đại diện cho Nhóm Con
+// class SubGroup {
+//   final String subGroupId;
+//   final String subGroupName;
+//   final List<Member> members;
+//   final List<AppInfo> lockedApps;
+//   final Duration totalLockDuration;
+//   final DateTime? lockStartTime;
+//
+//   SubGroup({
+//     required this.subGroupId,
+//     required this.subGroupName,
+//     required this.members,
+//     required this.lockedApps,
+//     required this.totalLockDuration,
+//     this.lockStartTime,
+//   });
+//
+//   SubGroup copyWith({
+//     String? subGroupId,
+//     String? subGroupName,
+//     List<Member>? members,
+//     List<AppInfo>? lockedApps,
+//     Duration? totalLockDuration,
+//     DateTime? lockStartTime,
+//   }) {
+//     return SubGroup(
+//       subGroupId: subGroupId ?? this.subGroupId,
+//       subGroupName: subGroupName ?? this.subGroupName,
+//       members: members ?? this.members,
+//       lockedApps: lockedApps ?? this.lockedApps,
+//       totalLockDuration: totalLockDuration ?? this.totalLockDuration,
+//       lockStartTime: lockStartTime ?? this.lockStartTime,
+//     );
+//   }
+// }
+
 class SubGroup {
   final String subGroupId;
   final String subGroupName;
-  final List<Member> members; // Thành viên được chọn từ Group Cha
+  final List<Member> members;
   final List<AppInfo> lockedApps;
   final Duration totalLockDuration;
-  final DateTime? lockStartTime; // Khóa lúc nào (thời gian bắt đầu)
+  final DateTime? lockStartTime; // Null = Khóa Ngay; Có giá trị = Đặt lịch (Một lần hoặc Hằng ngày)
 
   SubGroup({
     required this.subGroupId,
@@ -73,12 +108,11 @@ class SubGroup {
   }
 }
 
-// Lớp đại diện cho Nhóm Cha
 class Group {
   final String groupId;
   final String groupName;
-  final List<Member> members; // Tất cả thành viên trong Group Cha
-  final List<SubGroup> subGroups; // Các Group Con
+  final List<Member> members;
+  final List<SubGroup> subGroups;
 
   Group({
     required this.groupId,
