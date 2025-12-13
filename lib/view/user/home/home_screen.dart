@@ -152,14 +152,15 @@ class _HomeScreenState extends State<HomeScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Đã cập nhật Group "${result.name}" thành công!')),
       );
-    } else {
-      // 2. Group đã bị xóa (result là null)
-      // Sử dụng group.id gốc (vì group.name và id vẫn còn)
-      _deleteGroupById(group.name);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Đã xóa Group "${group.name}".')),
-      );
     }
+    // else {
+    //   // 2. Group đã bị xóa (result là null)
+    //   // Sử dụng group.id gốc (vì group.name và id vẫn còn)
+    //   _deleteGroupById(group.name);
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Đã xóa Group "${group.name}".')),
+    //   );
+    // }
   }
 
   void _addNewGroup(Group newGroup) {
