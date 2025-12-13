@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
@@ -733,17 +732,13 @@ class _SubGroupFormState extends State<SubGroupForm> {
 
     final initialTime = widget.initialSubGroup?.lockStartTime;
 
-    // Khởi tạo trạng thái dựa trên dữ liệu cũ:
     _isScheduledLock = initialTime != null;
-    _isDailySchedule = false; // Mặc định là đặt lịch một lần nếu có giá trị
+    _isDailySchedule = false;
     _oneTimeLockStartTime = initialTime;
     _dailyLockTime = null;
 
-    // TODO: Cần có logic để phân biệt Khóa Định kỳ và Khóa Một lần nếu dữ liệu cũ chỉ có DateTime
-    // Tạm thời, giả định nếu có initialTime, đó là Khóa Một lần.
   }
 
-  // --- HÀM CHỌN THỜI LƯỢNG KHÓA (Duration) ---
   void _selectLockDuration() async {
     int initialHours = _totalLockDuration.inHours;
     int initialMinutes = _totalLockDuration.inMinutes.remainder(60);
@@ -763,7 +758,6 @@ class _SubGroupFormState extends State<SubGroupForm> {
     }
   }
 
-  // --- HÀM CHỌN THỜI ĐIỂM BẮT ĐẦU (One-Time) ---
   void _selectOneTimeLockStartTime() async {
     final now = DateTime.now();
     final initialDate = _oneTimeLockStartTime ?? now;
@@ -797,7 +791,6 @@ class _SubGroupFormState extends State<SubGroupForm> {
     });
   }
 
-  // --- HÀM CHỌN GIỜ HẰNG NGÀY (Daily Schedule) ---
   void _selectDailyLockTime() async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
@@ -811,15 +804,12 @@ class _SubGroupFormState extends State<SubGroupForm> {
     }
   }
 
-  // Hàm định dạng Duration để hiển thị
   String _formatDurationForDisplay(Duration d) {
     int hours = d.inHours;
     int minutes = d.inMinutes.remainder(60);
     if (hours > 0) return "$hours giờ $minutes phút";
     return "$minutes phút";
   }
-
-  // Hàm định dạng DateTime để hiển thị
   String _formatDateTimeForDisplay(DateTime? dt) {
     if (dt == null) return "Chưa đặt lịch";
     final formattedTime = TimeOfDay.fromDateTime(dt).format(context);
@@ -827,7 +817,6 @@ class _SubGroupFormState extends State<SubGroupForm> {
     return "$formattedTime - $formattedDate";
   }
 
-  // Hàm định dạng TimeOfDay để hiển thị
   String _formatTimeOfDayForDisplay(TimeOfDay? time) {
     return time?.format(context) ?? "Chưa đặt giờ";
   }
@@ -836,12 +825,10 @@ class _SubGroupFormState extends State<SubGroupForm> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      // XỬ LÝ LOCK START TIME DỰA TRÊN LOẠI KHÓA
       DateTime? finalLockStartTime;
 
       if (_isScheduledLock) {
         if (_isDailySchedule) {
-          // Định kỳ Hằng ngày: Lưu TimeOfDay vào lockStartTime ngày hiện tại
           final time = _dailyLockTime ?? TimeOfDay.now();
           finalLockStartTime = DateTime(
             DateTime.now().year,
@@ -851,7 +838,6 @@ class _SubGroupFormState extends State<SubGroupForm> {
             time.minute,
           );
         } else {
-          // Đặt lịch Một lần: Lưu DateTime đã chọn
           finalLockStartTime = _oneTimeLockStartTime;
         }
       } else {
@@ -885,7 +871,6 @@ class _SubGroupFormState extends State<SubGroupForm> {
   }
 
   void _deleteSubGroup() {
-    // ... (Logic xóa giữ nguyên) ...
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -967,7 +952,7 @@ class _SubGroupFormState extends State<SubGroupForm> {
                     ),
                     Expanded(
                       child: RadioListTile<bool>(
-                        title:  Text('Đặt Lịch'),
+                        title:  Text('Đặt lại'),
                         value: true,
                       ),
                     ),

@@ -78,7 +78,7 @@ class SubGroup {
   final List<Member> members;
   final List<AppInfo> lockedApps;
   final Duration totalLockDuration;
-  final DateTime? lockStartTime; // Null = Khóa Ngay; Có giá trị = Đặt lịch (Một lần hoặc Hằng ngày)
+  final DateTime? lockStartTime;
 
   SubGroup({
     required this.subGroupId,
